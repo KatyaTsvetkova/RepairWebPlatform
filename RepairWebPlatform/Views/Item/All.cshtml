@@ -1,0 +1,19 @@
+﻿ @model IEnumerable<ItemListingViewModel>
+ <div class="row"
+      >@foreach (var item in Model)
+        {
+            <div class="card-deck offset-md-2">
+                <div class="card"style="width: 18rem;">
+                   <img class="card-img-top" src="@item.ImageUrl" alt="@item.Name @item.Category">
+                   <div class="card-body">
+                       <h5 class="card-title">@item.Name</h5>
+                       <h6 class="text">@item.Price</h6>
+                       <h6 class="text-black-50">@item.Condition</h6>
+                       <h6 class="text-black-50">@item.Category</h6>
+                        <a asp-controller="Item" asp-action="Details" asp-rout-id="@item.Id" class="btn btn-primary">Details</a>
+                       </div>
+                   </div> 
+         
+            </div>
+        }
+ </div>
