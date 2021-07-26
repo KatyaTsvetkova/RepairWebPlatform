@@ -2,7 +2,7 @@
 
 namespace RepairWebPlatform.Data.Migrations
 {
-    public partial class CategoryAndItemTables : Migration
+    public partial class ProductAndCategoryTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,7 +20,7 @@ namespace RepairWebPlatform.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ItemDbSet",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -35,9 +35,9 @@ namespace RepairWebPlatform.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ItemDbSet", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ItemDbSet_Categories_CategoryId",
+                        name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
@@ -45,15 +45,15 @@ namespace RepairWebPlatform.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItemDbSet_CategoryId",
-                table: "ItemDbSet",
+                name: "IX_Products_CategoryId",
+                table: "Products",
                 column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ItemDbSet");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Categories");

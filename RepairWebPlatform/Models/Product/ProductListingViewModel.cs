@@ -1,9 +1,9 @@
-﻿namespace RepairWebPlatform.Models.Item
+﻿namespace RepairWebPlatform.Models.Product
 {  
     using System.ComponentModel.DataAnnotations;
 
     using static Data.DataConstants;
-    public class ItemListingViewModel
+    public class ProductListingViewModel
     {
         public int Id { get; init; }
         public string Name { get; init; }

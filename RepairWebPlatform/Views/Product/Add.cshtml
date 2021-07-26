@@ -1,11 +1,11 @@
-﻿@model AddItemFormModel
+﻿@model AddProductFormModel
 @{
-    ViewData["Title"] = "Add item";
+    ViewData["Title"] = "Add Product";
 }
 <form metod="post">
     <div class="row">
         <div class="offset-md-2 col-md-7">
-            <h2 class="heading-margin text-center"> Add new item</h2>
+            <h2 class="heading-margin text-center"> Add new product</h2>
            
                 <div class="form-group">
                     <label asp-for="Name"></label>
@@ -15,12 +15,12 @@
 
                 <div class="form-group">
                     <label asp-for="Condition"></label>
-                    <input asp-for="Condition" class="form-control" placeholder="Good,Bad,Repaird...">
+                    <input asp-for="Condition" class="form-control" placeholder="Good,Bad,Need to be repaird...">
                     <span asp-validation-for="Condition" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="City"></label>
-                    <input asp-for="City" class="form-control" placeholder="Wood, Steel, Plastic, Leather...">
+                    <input asp-for="City" class="form-control" placeholder="Sofia,Plovdiv,Varna,Burgas...">
                     <span asp-validation-for="City" class="small text-danger"></span>
                 </div>
 
@@ -32,9 +32,9 @@
                 <div class="form-group">
                     <label asp-for="CategoryId"></label>
                     <select asp-for="CategoryId" class="form-control">
-                        @foreach (var type in Model.Categories)
+                        @foreach (var product in Model.Categories)
                         {
-                            <option value="@type.Id">@type.Name</option>
+                            <option value="@product.Id">@product.Name</option>
                         }\
                     </select>
                 </div>

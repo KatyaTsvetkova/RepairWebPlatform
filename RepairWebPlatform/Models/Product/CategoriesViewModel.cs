@@ -1,6 +1,6 @@
-﻿namespace RepairWebPlatform.Models.Item
+﻿namespace RepairWebPlatform.Models.Product
 {
-    public class ItemTypesViewModel
+    public class CategoriesViewModel
     {
 
         public int Id { get; init; }

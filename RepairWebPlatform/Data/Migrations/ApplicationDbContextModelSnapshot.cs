@@ -234,7 +234,7 @@ namespace RepairWebPlatform.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("RepairWebPlatform.Data.Models.Item", b =>
+            modelBuilder.Entity("RepairWebPlatform.Data.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -271,7 +271,7 @@ namespace RepairWebPlatform.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("ItemDbSet");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -325,7 +325,7 @@ namespace RepairWebPlatform.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RepairWebPlatform.Data.Models.Item", b =>
+            modelBuilder.Entity("RepairWebPlatform.Data.Models.Product", b =>
                 {
                     b.HasOne("RepairWebPlatform.Data.Models.Category", "Category")
                         .WithMany("Categories")

@@ -1,6 +1,32 @@
-﻿@model List<ItemListingViewModel>
+﻿@model IndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
- 
+
+<div class="mb-5"></div>
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="text-dark align-content-center">Repair.Me</h1>
+        <p class="lead text-muted"> Welcome to the place where your items can have second life. Get your broken things repaired from our handymen. Or sell them in the condition they are. </p>
+        <p>
+            <a asp-controller="Product" asp-action="Add" class="btn btn-primary my-2">Add broken item </a>
+            <a asp-controller="Product" asp-action="All" class="btn btn-secondary my-2"> View all items</a>
+        </p>
+    </div>
+</section>
+<div class="jumbotron">
+    <div class="row">
+        <h2 class="col-md-4 text-center">
+            @Model.TotalProducts Products
+        </h2>
+        <h2 class="col-md-4 text-center">
+            @Model.TotalUsers Users
+        </h2>
+        <h2 class="col-md-4 text-center">
+            @Model.TotalHandyMen HandyMen
+        </h2>
+    </div>
+</div>
+
 

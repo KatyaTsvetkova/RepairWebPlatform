@@ -4,7 +4,7 @@
 
     using static DataConstants;
 
-    public class Item
+    public class Product
     {
         public int Id { get; init; }
 

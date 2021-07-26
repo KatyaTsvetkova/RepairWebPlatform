@@ -4,25 +4,25 @@
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using RepairWebPlatform.Data;
-    using RepairWebPlatform.Models.Item;
+    using RepairWebPlatform.Models.Product;
     using RepairWebPlatform.Data.Models;
 
 
-    public class ItemController: Controller
+    public class ProductController: Controller
     {
         private readonly RepairDbContext data;
 
-        public ItemController(RepairDbContext data)
+        public ProductController(RepairDbContext data)
         {
             this.data = data;
         }
 
         public IActionResult All()
         {
-            var item = this.data
-                .ItemDbSet
+            var product = this.data
+                .Products
                 .OrderByDescending(f=>f.Id)
-                .Select(f => new ItemListingViewModel
+                .Select(f => new ProductListingViewModel()
                 {
                     Id = f.Id,
                     Name = f.Name,
@@ -34,54 +34,54 @@
                 })
                 .ToList();
 
-            return View(item);
+            return View(product);
         }
-        public IActionResult Add() => View(new AddItemFormModel()
+        public IActionResult Add() => View(new AddProductFormModel()
         {
-            Categories = this.GetItemTypes()
+            Categories = this.GetCategory()
         });
          
 
         [HttpPost]
-        public IActionResult Add(AddItemFormModel item)
+        public IActionResult Add(AddProductFormModel product)
         {
 
-            if (!this.data.Categories.Any(f=> f.Id == item.CategoryId))
+            if (!this.data.Categories.Any(f=> f.Id == product.CategoryId))
             {
-                this.ModelState.AddModelError(nameof(item.CategoryId), "item type does not exist.");
+                this.ModelState.AddModelError(nameof(product.CategoryId), "Category does not exist.");
             }
 
             if (!ModelState.IsValid)
             {
 
-                item.Categories = this.GetItemTypes();
+                product.Categories = this.GetCategory();
                
-                return View(item);
+                return View(product);
             }
 
-            var itemData = new Item
+            var productData = new Product
             {
-                Name = item.Name,
-                Condition = item.Condition,
-                City = item.City,
-                ImageUrl = item.ImageUrl,
-                Description = item.Description,
-                Price = item.Price,
-                CategoryId = item.CategoryId
+                Name = product.Name,
+                Condition = product.Condition,
+                City = product.City,
+                ImageUrl = product.ImageUrl,
+                Description = product.Description,
+                Price = product.Price,
+                CategoryId = product.CategoryId
 
             };
 
-            this.data.ItemDbSet.Add(itemData);
+            this.data.Products.Add(productData);
 
             this.data.SaveChanges();
 
             return RedirectToAction(nameof(All));
 
         }
-        private IEnumerable<ItemTypesViewModel> GetItemTypes()
+        private IEnumerable<CategoriesViewModel> GetCategory()
             => this.data
                 .Categories
-                .Select(f => new ItemTypesViewModel()
+                .Select(f => new CategoriesViewModel()
                 {
                     Id = f.Id,
                     Name = f.Name

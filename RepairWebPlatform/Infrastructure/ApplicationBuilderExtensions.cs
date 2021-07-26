@@ -39,7 +39,7 @@
                 new Category(){Name = "Autos"},
                 new Category(){Name = "Interior Decoration"},
                 new Category(){Name = "TV,Computers and Phones"},
-                new Category(){Name = "Jewelry"},
+                new Category(){Name = "Watches and Jewelry"},
                 new Category(){Name = "Others"},
                  
                

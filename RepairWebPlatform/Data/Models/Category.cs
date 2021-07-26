@@ -8,6 +8,6 @@
 
         public string Name { get; init; }
 
-        public IEnumerable<Item> Categories { get; init; } = new List<Item>();
+        public IEnumerable<Product> Categories { get; init; } = new List<Product>();
     }
 }

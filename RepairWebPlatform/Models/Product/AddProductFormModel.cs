@@ -1,11 +1,11 @@
-﻿namespace RepairWebPlatform.Models.Item
+﻿namespace RepairWebPlatform.Models.Product
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using static Data.DataConstants;
 
-    public class AddItemFormModel
+    public class AddProductFormModel
     { 
 
         [Required (ErrorMessage = "Name is required.")]
@@ -35,7 +35,7 @@
         [Required]
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
-        public IEnumerable<ItemTypesViewModel> Categories { get; set; }
+        public IEnumerable<CategoriesViewModel> Categories { get; set; }
 
     }
 }
