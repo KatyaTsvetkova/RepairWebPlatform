@@ -1,6 +1,22 @@
-﻿ @model IEnumerable<ProductListingViewModel>
+﻿ @model  ProductSearchViewModel
+
+
+
+
+     <form method="get">
+         <div class="row mb-5">
+             <div class="form-group col-md-3">
+                 <label asp-for="SearchTerm"></label>
+                 <input asp-for="SearchTerm" class="form-control" placeholder="Enter text">
+             </div> 
+         </div>
+         
+     </form>
+ 
+ 
+
  <div class="row"
-      >@foreach (var product in Model)
+      >@foreach (var product in Model.Products)
         {
             <div class="card-deck offset-md-2">
                 <div class="card"style="width: 18rem;">

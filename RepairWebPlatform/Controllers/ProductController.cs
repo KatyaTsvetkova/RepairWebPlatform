@@ -17,10 +17,21 @@
             this.data = data;
         }
 
-        public IActionResult All()
+        public IActionResult All(string  searchTerm)
         {
-            var product = this.data
-                .Products
+            var productsQuery = this.data.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                productsQuery = productsQuery.Where(p =>
+                    p.Description.ToLower().Contains(searchTerm.ToLower()) ||
+                    p.Name.ToLower().Contains(searchTerm.ToLower())||
+                    p.City.ToLower().Contains(searchTerm.ToLower()));
+
+            }
+
+
+            var product = productsQuery
                 .OrderByDescending(f=>f.Id)
                 .Select(f => new ProductListingViewModel()
                 {
@@ -34,7 +45,11 @@
                 })
                 .ToList();
 
-            return View(product);
+            return View( new ProductSearchViewModel
+            {
+                Products = product,
+                SearchTerm = searchTerm
+            });
         }
         public IActionResult Add() => View(new AddProductFormModel()
         {
