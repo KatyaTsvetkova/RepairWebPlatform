@@ -1,19 +1,37 @@
 ﻿ @model  ProductSearchViewModel
 
+ <form method="get">
+     <div class="row mb-5">
+         
+         <div class="form-group col-md-4">
+             <div class="form-group">
+                 <label asp-for="City"></label>
+                 <select asp-for="City" class="form-control">
+                     @foreach (var city in Model.Cities)
+                     {
+                         <option value="">All</option>
+                         <option value="@city">@city</option>
+                     }
+                 </select>
+             </div>
+         </div>
 
-
-
-     <form method="get">
-         <div class="row mb-5">
-             <div class="form-group col-md-3">
-                 <label asp-for="SearchTerm"></label>
-                 <input asp-for="SearchTerm" class="form-control" placeholder="Enter text">
-             </div> 
+         <div class="form-group col-md-3">
+             <label asp-for="SearchTerm"></label>
+             <input asp-for="SearchTerm" class="form-control" placeholder="Enter text">
          </div>
          
-     </form>
- 
- 
+         <div class="form-group col-md-4">
+             <div class="form-group">
+                 <label asp-for="Sorting"></label>
+                 <select asp-for="Sorting" class="form-control">
+                     <option value="0" selected>Date Created</option>
+                     <option value="1">Price</option>
+                 </select>
+             </div>
+         </div>
+     </div>
+ </form>
 
  <div class="row"
       >@foreach (var product in Model.Products)
@@ -24,6 +42,7 @@
                    <div class="card-body">
                        <h5 class="card-title">@product.Name</h5>
                        <h6 class="text-dark">@product.Price</h6>
+                       <h6 class="text-dark">@product.City</h6>
                        <h6 class="text-black-50">@product.Condition</h6>
                        <h6 class="text-black-50">@product.Category</h6>
                         <a asp-controller="Product" asp-action="Details" asp-rout-id="@product.Id" class="btn btn-primary">Details</a>
@@ -32,4 +51,34 @@
          
             </div>
         }
+ </div>
+ @{
+     var previousPage = Model.CurrentPage - 1;
+     if (previousPage < 1)
+     {
+         previousPage = 1;
+     }
+    
+     var maxPage = Math.Ceiling((double)Model.TotalProducts / ProductSearchViewModel.ProductsPerPage);
+ }
+
+ <div class="row mb-5">
+     <div class="col-md-6">
+         <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+            asp-controller="Product"
+            asp-action="All"
+            asp-route-currentPage="@previousPage"
+            asp-route-brand="@Model.City"
+            asp-route-searchTerm="@Model.SearchTerm"
+            asp-route-sorting="@((int)Model.Sorting)"><<</a>
+     </div>
+     <div class="col-md-6">
+         <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)"
+            asp-controller="Product" 
+            asp-action="All"
+            asp-route-currentPage="@(Model.CurrentPage + 1)"
+            asp-route-brand="@Model.City"
+            asp-route-searchTerm="@Model.SearchTerm"
+            asp-route-sorting="@((int)Model.Sorting)">>></a>
+     </div>
  </div>

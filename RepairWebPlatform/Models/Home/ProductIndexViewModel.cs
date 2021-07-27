@@ -1,5 +1,6 @@
 ﻿namespace RepairWebPlatform.Models.Home
 {
+    using RepairWebPlatform.Data.Models;
     public class ProductIndexViewModel
     {
         public int Id { get; init; }

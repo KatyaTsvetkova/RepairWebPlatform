@@ -17,22 +17,41 @@
             this.data = data;
         }
 
-        public IActionResult All(string  searchTerm)
+        public IActionResult All( [FromQuery]ProductSearchViewModel query)
         {
             var productsQuery = this.data.Products.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
                 productsQuery = productsQuery.Where(p =>
-                    p.Description.ToLower().Contains(searchTerm.ToLower()) ||
-                    p.Name.ToLower().Contains(searchTerm.ToLower())||
-                    p.City.ToLower().Contains(searchTerm.ToLower()));
+                    p.Description.ToLower().Contains(query.SearchTerm.ToLower()) ||
+                    p.Name.ToLower().Contains(query.SearchTerm.ToLower())||
+                    p.City.ToLower().Contains(query.SearchTerm.ToLower()));
 
             }
 
+            if (!string.IsNullOrWhiteSpace(query.City))
+            {
+                productsQuery = productsQuery.Where(c => c.City == query.City);
+            }
+
+            var cityList = this.data
+                .Products
+                .Select(c => c.City)
+                .Distinct()
+                .OrderBy(c=>c)
+                .ToList();
+
+            productsQuery = query.Sorting switch
+            {
+                ProductSorting.DateCreated=> productsQuery.OrderByDescending(p=>p.Id),
+                ProductSorting.Price=>productsQuery.OrderByDescending(p=>p.Price),
+                _=>productsQuery.OrderByDescending(p=>p.Id)
+            };
 
             var product = productsQuery
-                .OrderByDescending(f=>f.Id)
+                .Skip((query.CurrentPage-1)*ProductSearchViewModel.ProductsPerPage)
+                .Take(ProductSearchViewModel.ProductsPerPage)
                 .Select(f => new ProductListingViewModel()
                 {
                     Id = f.Id,
@@ -45,11 +64,13 @@
                 })
                 .ToList();
 
-            return View( new ProductSearchViewModel
-            {
-                Products = product,
-                SearchTerm = searchTerm
-            });
+            var totalProducts = product.Count();
+
+            query.TotalProducts = totalProducts;
+            query.Cities = cityList;
+            query.Products = product;
+
+            return View(query);
         }
         public IActionResult Add() => View(new AddProductFormModel()
         {
